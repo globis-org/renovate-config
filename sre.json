@@ -1,4 +1,9 @@
 {
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base",
+    "github>globis-org/renovate-config:pinGitHubActions"
+  ],
   "timezone": "Asia/Tokyo",
   "reviewers": [
     "team:sre"
@@ -15,5 +20,6 @@
     "before 5am on Thursday",
     "after 10pm on Thursday",
     "before 5am on Friday"
-  ]
+  ],
+  "platformAutomerge": true
 }
