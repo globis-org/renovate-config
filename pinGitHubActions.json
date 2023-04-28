@@ -5,7 +5,7 @@
   ],
   "packageRules": [
     {
-      "matchPaths": [".github/workflows/*.yaml"],
+      "matchManagers": ["github-actions"],
       "groupName": "github-actions",
       "automerge": true,
       "major": {
