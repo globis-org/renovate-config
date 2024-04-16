@@ -1,0 +1,56 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "platformAutomerge": true,
+  "rebaseWhen": "never",
+  "prHourlyLimit": 1,
+  "enabledManagers": [
+    "terraform"
+  ],
+  "packageRules": [
+    {
+      "matchPackagePatterns": [
+        "^app.terraform.io/gdp-sre",
+        "terraform-aws-modules/eks/aws"
+      ],
+      "enabled": false
+    },
+    {
+      "matchManagers": [
+        "terraform"
+      ],
+      "matchDepTypes": [
+        "helm_release"
+      ],
+      "enabled": false
+    },
+    {
+      "matchManagers": [
+        "terraform"
+      ],
+      "additionalBranchPrefix": "{{packageFileDir}}-",
+      "commitMessageSuffix": "({{packageFileDir}})",
+      "groupName": "terraform state",
+      "groupSlug": "tfstate",
+      "automerge": true,
+      "major": {
+        "automerge": false
+      }
+    },
+    {
+      "matchManagers": [
+        "terraform"
+      ],
+      "additionalBranchPrefix": "{{packageFileDir}}-",
+      "commitMessageSuffix": "({{packageFileDir}})",
+      "description": "terraform local modules",
+      "groupName": "terraform modules",
+      "groupSlug": "tfmodules",
+      "matchFileNames": ["**/modules/**"],
+      "automerge": true,
+      "major": {
+        "automerge": false
+      },
+      "rangeStrategy": "auto"
+    }
+  ]
+}
