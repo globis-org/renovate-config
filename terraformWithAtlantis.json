@@ -1,16 +1,14 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "platformAutomerge": true,
   "rebaseWhen": "never",
   "prHourlyLimit": 1,
-  "enabledManagers": [
-    "terraform"
-  ],
   "packageRules": [
     {
+      "matchManagers": [
+        "terraform"
+      ],
       "matchPackagePatterns": [
         "^app.terraform.io/gdp-sre",
-        "terraform-aws-modules/eks/aws"
       ],
       "enabled": false
     },
