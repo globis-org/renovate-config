@@ -1,0 +1,14 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "github>globis-org/renovate-config:terraform"
+  ],
+  "prHourlyLimit": 0,
+  "rebaseWhen": "never",
+  "packageRules": [
+    {
+      "matchPackageNames": ["*"],
+      "automerge": false
+    }
+  ]
+}
