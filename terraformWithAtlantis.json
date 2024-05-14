@@ -25,6 +25,15 @@
       "matchManagers": [
         "terraform"
       ],
+      "matchPackageNames": [
+        "terraform"
+      ],
+      "allowedVersions": "<=1.8.1"
+    },
+    {
+      "matchManagers": [
+        "terraform"
+      ],
       "additionalBranchPrefix": "{{packageFileDir}}-",
       "commitMessageSuffix": "({{packageFileDir}})",
       "groupName": "terraform state",
