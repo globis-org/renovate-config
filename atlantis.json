@@ -4,5 +4,12 @@
     "github>globis-org/renovate-config:terraform"
   ],
   "prHourlyLimit": 1,
-  "rebaseWhen": "never"
+  "rebaseWhen": "never",
+  "packageRules": [
+    {
+      "matchManagers": ["terraform"],
+      "matchDepTypes": ["required_version"],
+      "allowedVersions": "<=1.8.1"
+    }
+  ]
 }
