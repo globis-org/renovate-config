@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base",
+    "config:recommended",
     "github>globis-org/renovate-config:pinGitHubActions"
   ],
   "timezone": "Asia/Tokyo",
