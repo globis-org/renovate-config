@@ -8,8 +8,7 @@
   "packageRules": [
     {
       "matchManagers": ["terraform"],
-      "matchDepTypes": ["required_version"],
-      "allowedVersions": "<=1.8.1"
+      "matchDepTypes": ["required_version"]
     }
   ]
 }
