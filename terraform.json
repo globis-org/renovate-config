@@ -8,10 +8,6 @@
     },
     {
       "matchManagers": ["terraform"],
-      "enabled": false
-    },
-    {
-      "matchManagers": ["terraform"],
       "additionalBranchPrefix": "{{packageFileDir}}-",
       "commitMessageSuffix": "({{packageFileDir}})",
       "groupName": "terraform state",
