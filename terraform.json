@@ -8,7 +8,6 @@
     },
     {
       "matchManagers": ["terraform"],
-      "matchDepTypes": ["helm_release"],
       "enabled": false
     },
     {
