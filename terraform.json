@@ -8,11 +8,6 @@
     },
     {
       "matchManagers": ["terraform"],
-      "matchDepTypes": ["helm_release"],
-      "enabled": false
-    },
-    {
-      "matchManagers": ["terraform"],
       "additionalBranchPrefix": "{{packageFileDir}}-",
       "commitMessageSuffix": "({{packageFileDir}})",
       "groupName": "terraform state",
