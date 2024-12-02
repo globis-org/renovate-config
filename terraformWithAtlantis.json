@@ -8,7 +8,7 @@
         "terraform"
       ],
       "matchPackagePatterns": [
-        "^app.terraform.io/gdp-sre",
+        "^app.terraform.io/gdp-sre"
       ],
       "enabled": false
     },
