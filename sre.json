@@ -12,15 +12,15 @@
     "excluded from findy"
   ],
   "schedule": [
-    "before 5am on Monday",
-    "after 10pm on Monday",
-    "before 5am on Tuesday",
-    "after 10pm on Tuesday",
-    "before 5am on Wednesday",
-    "after 10pm on Wednesday",
-    "before 5am on Thursday",
-    "after 10pm on Thursday",
-    "before 5am on Friday",
+    "before 8am on Monday",
+    "after 9pm on Monday",
+    "before 8am on Tuesday",
+    "after 9pm on Tuesday",
+    "before 8am on Wednesday",
+    "after 9pm on Wednesday",
+    "before 8am on Thursday",
+    "after 9pm on Thursday",
+    "before 8am on Friday",
     "every weekend"
   ],
   "platformAutomerge": true
