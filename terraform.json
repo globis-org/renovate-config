@@ -8,6 +8,12 @@
     },
     {
       "matchManagers": ["terraform"],
+      "matchPackageNames": ["terraform-aws-modules/iam/aws"],
+      "allowedVersions": "<6.0.0",
+      "description": "Restrict IAM module to v5.x due to breaking changes in v6"
+    },
+    {
+      "matchManagers": ["terraform"],
       "additionalBranchPrefix": "{{packageFileDir}}-",
       "commitMessageSuffix": "({{packageFileDir}})",
       "groupName": "terraform state",
