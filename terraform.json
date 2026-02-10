@@ -14,29 +14,17 @@
     },
     {
       "matchManagers": ["terraform"],
-      "additionalBranchPrefix": "{{packageFileDir}}-",
-      "commitMessageSuffix": "({{packageFileDir}})",
-      "groupName": "terraform state",
-      "groupSlug": "tfstate",
+      "matchFileNames": ["terraform/**/*"],
+      "additionalBranchPrefix": "terraform/{{ lookup (split packageFileDir '/') 1 }}-",
+      "commitMessageSuffix": "(terraform/{{ lookup (split packageFileDir '/') 1 }})",
+      "groupName": "terraform states",
+      "groupSlug": "tfstates",
+      "description": "Group Terraform updates by the first subdirectory under terraform/ (e.g. terraform/foo/**/*).",
       "automerge": true,
       "major": {
         "automerge": false
       },
       "rangeStrategy": "pin"
-    },
-    {
-      "matchManagers": ["terraform"],
-      "additionalBranchPrefix": "{{packageFileDir}}-",
-      "commitMessageSuffix": "({{packageFileDir}})",
-      "description": "terraform local modules",
-      "groupName": "terraform modules",
-      "groupSlug": "tfmodules",
-      "matchFileNames": ["**/modules/**"],
-      "automerge": true,
-      "major": {
-        "automerge": false
-      },
-      "rangeStrategy": "auto"
     }
   ]
 }
