@@ -25,6 +25,12 @@
         "automerge": false
       },
       "rangeStrategy": "pin"
+    },
+    {
+      "matchManagers": ["terraform"],
+      "matchDepTypes": ["required_provider"],
+      "internalChecksFilter": "flexible",
+      "description": "Use flexible internalChecksFilter for terraform providers. Terraform Registry API does not provide releaseTimestamp, causing all versions to be marked as pending with the default timestamp-required behaviour. This prevents provider updates from ever being created."
     }
   ]
 }
