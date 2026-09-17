@@ -3,8 +3,8 @@
   "extends": [
     "github>globis-org/renovate-config:terraform"
   ],
-  "prHourlyLimit": 0,
-  "rebaseWhen": "never",
+  "prHourlyLimit": 1,
+  "rebaseWhen": "automerging",
   "packageRules": [
     {
       "matchPackageNames": ["*"],
