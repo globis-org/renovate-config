@@ -7,8 +7,21 @@
   "rebaseWhen": "automerging",
   "packageRules": [
     {
+      "description": "既定は automerge しない (以下の rule で minor / patch だけ開ける)",
       "matchPackageNames": ["*"],
       "automerge": false
+    },
+    {
+      "description": "Terraform (provider / module / core) の minor / patch は automerge。diff があれば hcp-terraform/plan が approve まで止める",
+      "matchManagers": ["terraform"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    },
+    {
+      "description": "github-actions の minor / patch (digest 更新を含む) は automerge",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true
     }
   ]
 }
