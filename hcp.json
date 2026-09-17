@@ -4,7 +4,6 @@
     "github>globis-org/renovate-config:terraform"
   ],
   "prHourlyLimit": 1,
-  "prConcurrentLimit": 10,
   "rebaseWhen": "automerging",
   "packageRules": [
     {
