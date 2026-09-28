@@ -2,7 +2,7 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended",
-    "github>globis-org/renovate-config:pinGitHubActions"
+    "github>globis-org/renovate-config:githubActions"
   ],
   "timezone": "Asia/Tokyo",
   "reviewers": [

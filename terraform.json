@@ -2,35 +2,45 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "packageRules": [
     {
+      "description": "自前の private registry (app.terraform.io/gdp-sre) の module は Renovate 管理外とする",
       "matchManagers": ["terraform"],
-      "matchPackagePatterns": ["^app.terraform.io/gdp-sre"],
+      "matchPackageNames": ["/^app\\.terraform\\.io/gdp-sre/"],
       "enabled": false
     },
     {
+      "description": "Restrict IAM module to v5.x due to breaking changes in v6",
       "matchManagers": ["terraform"],
       "matchPackageNames": ["terraform-aws-modules/iam/aws"],
-      "allowedVersions": "<6.0.0",
-      "description": "Restrict IAM module to v5.x due to breaking changes in v6"
+      "allowedVersions": "<6.0.0"
     },
     {
+      "description": "バージョンは範囲指定ではなく固定する (パスに依存しないポリシー)",
+      "matchManagers": ["terraform"],
+      "rangeStrategy": "pin"
+    },
+    {
+      "description": "major 以外は automerge。major は手動で確認する (パスに依存しないポリシー)",
+      "matchManagers": ["terraform"],
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true
+    },
+    {
+      "description": "terraform/ 直下のディレクトリ単位で PR を分ける (e.g. terraform/foo/**/*)。この配置でないリポジトリはリポジトリ側で grouping を定義する",
       "matchManagers": ["terraform"],
       "matchFileNames": ["terraform/**/*"],
       "additionalBranchPrefix": "terraform/{{ lookup (split packageFileDir '/') 1 }}-",
       "commitMessageSuffix": "(terraform/{{ lookup (split packageFileDir '/') 1 }})",
       "groupName": "terraform states",
-      "groupSlug": "tfstates",
-      "description": "Group Terraform updates by the first subdirectory under terraform/ (e.g. terraform/foo/**/*).",
-      "automerge": true,
-      "major": {
-        "automerge": false
-      },
-      "rangeStrategy": "pin"
+      "groupSlug": "tfstates"
     },
     {
+      "description": [
+        "Use flexible internalChecksFilter for terraform providers. Terraform Registry API does not provide releaseTimestamp, causing all versions to be marked as pending with the default timestamp-required behaviour. This prevents provider updates from ever being created.",
+        "NOTE: Renovate 44.x の terraform-provider datasource は releaseTimestampSupport = true (registry.terraform.io / registry.opentofu.org のみ)。この rule が今も必要かは要再検証"
+      ],
       "matchManagers": ["terraform"],
       "matchDepTypes": ["required_provider"],
-      "internalChecksFilter": "flexible",
-      "description": "Use flexible internalChecksFilter for terraform providers. Terraform Registry API does not provide releaseTimestamp, causing all versions to be marked as pending with the default timestamp-required behaviour. This prevents provider updates from ever being created."
+      "internalChecksFilter": "flexible"
     }
   ]
 }
