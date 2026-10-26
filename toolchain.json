@@ -1,5 +1,8 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "group:pnpm"
+  ],
   "packageRules": [
     {
       "description": [
@@ -35,30 +38,6 @@
         "node"
       ],
       "groupName": "node"
-    },
-    {
-      "description": "mise の pnpm と package.json の packageManager (pnpm/setup はこれを読む) を同じ PR で更新する。どちらも npm datasource を参照するため更新後のバージョンはずれない",
-      "matchManagers": [
-        "mise"
-      ],
-      "matchDepNames": [
-        "pnpm"
-      ],
-      "groupName": "pnpm"
-    },
-    {
-      "description": "依存パッケージとしての pnpm は対象外にするため depType で絞る",
-      "matchManagers": [
-        "npm"
-      ],
-      "matchDepTypes": [
-        "packageManager",
-        "devEngines.packageManager"
-      ],
-      "matchDepNames": [
-        "pnpm"
-      ],
-      "groupName": "pnpm"
     }
   ]
 }

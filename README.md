@@ -74,17 +74,18 @@ atlantis.json / hcp.json 側にそれぞれ置くこと (preset の解決順で�
 
 ## toolchain.json の挙動
 
-mise.toml と setup-* action / package.json で同じツールを指定している場合に、それらの更新をツールごとに 1 つの PR (`renovate/uv` / `node` / `pnpm`) にまとめる。
+mise.toml と setup-* action / package.json で同じツールを指定している場合に、それらの更新をツールごとに 1 つの PR (`renovate/uv` / `node` / `pnpm-packages`) にまとめる。pnpm は Renovate 組み込みの `group:pnpm` を extends する。
 `enabledManagers` を指定しているリポジトリでは、mise.toml 側を更新させるために `mise` を、package.json 側を更新させるために `npm` を追加すること。
 
 | ツール | mise | CI / package.json | マッチ条件 |
 |:--|:--|:--|:--|
 | uv | `uv` | `astral-sh/setup-uv` の `version` | packageName `astral-sh/uv` |
 | node | `node` | `actions/setup-node` の `node-version`、`pnpm/setup` の `runtime`、package.json の `devEngines.runtime` | depName `node` (npm は depType `devEngines.runtime` のみ) |
-| pnpm | `pnpm` | package.json の `packageManager` / `devEngines.packageManager` (`pnpm/setup` はこれを読む) | depName `pnpm` (npm は上記 depType のみ) |
+| pnpm | `pnpm` | package.json の `packageManager` / `devEngines.packageManager` (`pnpm/setup` はこれを読む) | `group:pnpm` (datasource `npm` / `docker` の packageName `pnpm`) |
 
 * 対象は利用実績のあるツールに限る。追加する場合は mise と CI の両方を Renovate が同じ depName / packageName で拾えることを dry-run で確認する
-* npm manager は depType で絞る。`engines.node` (互換範囲の宣言) や依存パッケージとしての pnpm はグループに入れない
+* node の npm manager は depType で絞る。`engines.node` (互換範囲の宣言) はグループに入れない
+* 組み込みの `group:nodeJs` (config:recommended に含まれる) は groupName を持たずまとめないうえ、setup-node の datasource (actions/node-versions) も対象外のため、node は自前のルールで揃える
 * node は mise と setup-node で参照する datasource が異なる (node / actions/node-versions) ため、同じ PR でも更新後のバージョンがずれることがある
 * uv が取得する Python のパッチバージョンは uv 本体に組み込まれた一覧で決まるため、uv の更新で Python のパッチも上がる
 * Renovate はグループ内のすべての更新が automerge 対象のときだけ automerge する。mise.toml 側の更新を含む PR は automerge されない
