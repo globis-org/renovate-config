@@ -7,26 +7,21 @@
         "uv が取得する Python のパッチバージョンは uv 本体に組み込まれた一覧で決まるため、この更新で Python のパッチも上がる",
         "githubActions の github-actions グループより後に評価させるため、sre.json では githubActions の後に extends する"
       ],
-      "matchPackageNames": ["astral-sh/uv"],
+      "matchPackageNames": [
+        "astral-sh/uv"
+      ],
       "groupName": "uv"
     },
     {
-      "description": "mise の node と actions/setup-node の node-version は packageName が異なる (node / actions/node-versions) ため depName で揃える",
-      "matchManagers": ["mise", "github-actions"],
-      "matchDepNames": ["node"],
+      "description": "mise の node と actions/setup-node の node-version (pnpm/setup の runtime も同じ depName) は packageName が異なる (node / actions/node-versions) ため depName で揃える",
+      "matchManagers": [
+        "mise",
+        "github-actions"
+      ],
+      "matchDepNames": [
+        "node"
+      ],
       "groupName": "node"
-    },
-    {
-      "description": "mise の python と actions/setup-python の python-version は packageName が異なる (python/cpython / actions/python-versions) ため depName で揃える",
-      "matchManagers": ["mise", "github-actions"],
-      "matchDepNames": ["python"],
-      "groupName": "python"
-    },
-    {
-      "description": "mise の go と actions/setup-go の go-version は packageName が異なる (golang/go / actions/go-versions) ため depName で揃える",
-      "matchManagers": ["mise", "github-actions"],
-      "matchDepNames": ["go"],
-      "groupName": "go"
     }
   ]
 }
