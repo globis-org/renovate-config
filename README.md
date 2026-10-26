@@ -6,8 +6,9 @@ globis-org 共通の Renovate preset。
 
 | File               | Description                                                                 |
 |:-------------------|:----------------------------------------------------------------------------|
-| sre.json           | SREチームの利用推奨設定 (githubActions を内包)。全リポジトリで最初に extends する |
+| sre.json           | SREチームの利用推奨設定 (githubActions / uv を内包)。全リポジトリで最初に extends する |
 | githubActions.json | GitHub Actions の推奨設定 (digest pin / グルーピング / major 以外の automerge) |
+| uv.json            | uv の推奨設定 (mise.toml と setup-uv の uv を同じ PR で更新する)                |
 | terraform.json     | Terraform の推奨設定 (更新ポリシーと PR の分け方)                              |
 | atlantis.json      | Atlantis で実行する場合の設定 (terraform を内包)                               |
 | hcp.json           | HCP Terraform で実行する場合の設定 (terraform を内包)                          |
@@ -70,3 +71,12 @@ atlantis.json / hcp.json 側にそれぞれ置くこと (preset の解決順で�
 `prConcurrentLimit` はリポジトリごとの処理能力に合わせて決めるため preset では指定しない
 (Renovate のデフォルトは 10)。`enabledManagers` とリポジトリ固有の packageRules も同様に
 リポジトリ側で指定する。
+
+## uv.json の挙動
+
+`astral-sh/uv` を `uv` グループにまとめ、mise.toml の `uv` と `astral-sh/setup-uv` の `with.version` を同じ PR で更新する。
+`enabledManagers` を指定しているリポジトリでは、mise.toml 側を更新させるために `mise` を追加すること。
+
+Renovate はグループ内のすべての更新が automerge 対象のときだけ automerge する。
+そのため mise.toml にも uv があるリポジトリでは、setup-uv の minor / patch も automerge されなくなる
+(uv の更新は uv が取得する Python のパッチバージョンも変えるため、人が確認する前提とする)。

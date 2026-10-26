@@ -1,0 +1,14 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "packageRules": [
+    {
+      "description": [
+        "mise.toml の uv と setup-uv の version 指定を 1 つの PR で更新し、ローカルと CI の uv のバージョンを揃える",
+        "uv が取得する Python のパッチバージョンは uv 本体に組み込まれた一覧で決まるため、この更新で Python のパッチも上がる",
+        "githubActions の github-actions グループより後に評価させるため、sre.json では githubActions の後に extends する"
+      ],
+      "matchPackageNames": ["astral-sh/uv"],
+      "groupName": "uv"
+    }
+  ]
+}
