@@ -6,8 +6,9 @@ globis-org 共通の Renovate preset。
 
 | File               | Description                                                                 |
 |:-------------------|:----------------------------------------------------------------------------|
-| sre.json           | SREチームの利用推奨設定 (githubActions を内包)。全リポジトリで最初に extends する |
+| sre.json           | SREチームの利用推奨設定 (githubActions / toolchain を内包)。全リポジトリで最初に extends する |
 | githubActions.json | GitHub Actions の推奨設定 (digest pin / グルーピング / major 以外の automerge) |
+| toolchain.json     | ローカル (mise) と CI (setup-* action) のツールバージョンを同じ PR で更新する       |
 | terraform.json     | Terraform の推奨設定 (更新ポリシーと PR の分け方)                              |
 | atlantis.json      | Atlantis で実行する場合の設定 (terraform を内包)                               |
 | hcp.json           | HCP Terraform で実行する場合の設定 (terraform を内包)                          |
@@ -70,3 +71,19 @@ atlantis.json / hcp.json 側にそれぞれ置くこと (preset の解決順で�
 `prConcurrentLimit` はリポジトリごとの処理能力に合わせて決めるため preset では指定しない
 (Renovate のデフォルトは 10)。`enabledManagers` とリポジトリ固有の packageRules も同様に
 リポジトリ側で指定する。
+
+## toolchain.json の挙動
+
+mise.toml と setup-* action で同じツールを指定している場合に、両者の更新をツールごとに 1 つの PR (`renovate/uv` / `node`) にまとめる。
+`enabledManagers` を指定しているリポジトリでは、mise.toml 側を更新させるために `mise` を追加すること。
+
+| ツール | mise | CI | マッチ条件 |
+|:--|:--|:--|:--|
+| uv | `uv` | `astral-sh/setup-uv` の `version` | packageName `astral-sh/uv` |
+| node | `node` | `actions/setup-node` の `node-version`、`pnpm/setup` の `runtime` | depName `node` |
+
+* 対象は利用実績のあるツールに限る。追加する場合は mise と CI の両方を Renovate が同じ depName / packageName で拾えることを dry-run で確認する
+* node は mise と setup-node で参照する datasource が異なる (node / actions/node-versions) ため、同じ PR でも更新後のバージョンがずれることがある
+* uv が取得する Python のパッチバージョンは uv 本体に組み込まれた一覧で決まるため、uv の更新で Python のパッチも上がる
+* Renovate はグループ内のすべての更新が automerge 対象のときだけ automerge する。mise.toml 側の更新を含む PR は automerge されない
+* mise.toml のバージョン指定の粒度 (例: `node = "24"`) を保つルールはリポジトリごとの方針なので、ここには置かずリポジトリ側で定義する
