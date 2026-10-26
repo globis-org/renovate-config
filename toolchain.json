@@ -22,6 +22,43 @@
         "node"
       ],
       "groupName": "node"
+    },
+    {
+      "description": "package.json の devEngines.runtime の node も node グループに入れる。engines.node (互換範囲の宣言) は対象外にするため depType で絞る",
+      "matchManagers": [
+        "npm"
+      ],
+      "matchDepTypes": [
+        "devEngines.runtime"
+      ],
+      "matchDepNames": [
+        "node"
+      ],
+      "groupName": "node"
+    },
+    {
+      "description": "mise の pnpm と package.json の packageManager (pnpm/setup はこれを読む) を同じ PR で更新する。どちらも npm datasource を参照するため更新後のバージョンはずれない",
+      "matchManagers": [
+        "mise"
+      ],
+      "matchDepNames": [
+        "pnpm"
+      ],
+      "groupName": "pnpm"
+    },
+    {
+      "description": "依存パッケージとしての pnpm は対象外にするため depType で絞る",
+      "matchManagers": [
+        "npm"
+      ],
+      "matchDepTypes": [
+        "packageManager",
+        "devEngines.packageManager"
+      ],
+      "matchDepNames": [
+        "pnpm"
+      ],
+      "groupName": "pnpm"
     }
   ]
 }
