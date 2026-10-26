@@ -6,9 +6,9 @@ globis-org 共通の Renovate preset。
 
 | File               | Description                                                                 |
 |:-------------------|:----------------------------------------------------------------------------|
-| sre.json           | SREチームの利用推奨設定 (githubActions / uv を内包)。全リポジトリで最初に extends する |
+| sre.json           | SREチームの利用推奨設定 (githubActions / toolchain を内包)。全リポジトリで最初に extends する |
 | githubActions.json | GitHub Actions の推奨設定 (digest pin / グルーピング / major 以外の automerge) |
-| uv.json            | uv の推奨設定 (mise.toml と setup-uv の uv を同じ PR で更新する)                |
+| toolchain.json     | ローカル (mise) と CI (setup-* action) のツールバージョンを同じ PR で更新する       |
 | terraform.json     | Terraform の推奨設定 (更新ポリシーと PR の分け方)                              |
 | atlantis.json      | Atlantis で実行する場合の設定 (terraform を内包)                               |
 | hcp.json           | HCP Terraform で実行する場合の設定 (terraform を内包)                          |
@@ -72,11 +72,19 @@ atlantis.json / hcp.json 側にそれぞれ置くこと (preset の解決順で�
 (Renovate のデフォルトは 10)。`enabledManagers` とリポジトリ固有の packageRules も同様に
 リポジトリ側で指定する。
 
-## uv.json の挙動
+## toolchain.json の挙動
 
-`astral-sh/uv` を `uv` グループにまとめ、mise.toml の `uv` と `astral-sh/setup-uv` の `with.version` を同じ PR で更新する。
+mise.toml と setup-* action で同じツールを指定している場合に、両者の更新をツールごとに 1 つの PR (`renovate/uv` / `node` / `python` / `go`) にまとめる。
 `enabledManagers` を指定しているリポジトリでは、mise.toml 側を更新させるために `mise` を追加すること。
 
-Renovate はグループ内のすべての更新が automerge 対象のときだけ automerge する。
-そのため mise.toml にも uv があるリポジトリでは、setup-uv の minor / patch も automerge されなくなる
-(uv の更新は uv が取得する Python のパッチバージョンも変えるため、人が確認する前提とする)。
+| ツール | mise | CI | マッチ条件 |
+|:--|:--|:--|:--|
+| uv | `uv` | `astral-sh/setup-uv` の `version` | packageName `astral-sh/uv` |
+| node | `node` | `actions/setup-node` の `node-version` | depName `node` |
+| python | `python` | `actions/setup-python` の `python-version` | depName `python` |
+| go | `go` | `actions/setup-go` の `go-version` | depName `go` |
+
+* node / python / go は mise と setup-* で参照する datasource が異なるため、同じ PR でも更新後のバージョンがずれることがある (例: python は mise が 3.15.2、setup-python が 3.15.1)
+* uv が取得する Python のパッチバージョンは uv 本体に組み込まれた一覧で決まるため、uv の更新で Python のパッチも上がる
+* Renovate はグループ内のすべての更新が automerge 対象のときだけ automerge する。mise.toml 側の更新を含む PR は automerge されない
+* mise.toml のバージョン指定の粒度 (例: `node = "24"`) を保つルールはリポジトリごとの方針なので、ここには置かずリポジトリ側で定義する

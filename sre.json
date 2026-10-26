@@ -3,7 +3,7 @@
   "extends": [
     "config:recommended",
     "github>globis-org/renovate-config:githubActions",
-    "github>globis-org/renovate-config:uv"
+    "github>globis-org/renovate-config:toolchain"
   ],
   "timezone": "Asia/Tokyo",
   "reviewers": [
