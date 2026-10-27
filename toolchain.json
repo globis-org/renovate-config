@@ -1,5 +1,8 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "group:pnpm"
+  ],
   "packageRules": [
     {
       "description": [
@@ -17,6 +20,19 @@
       "matchManagers": [
         "mise",
         "github-actions"
+      ],
+      "matchDepNames": [
+        "node"
+      ],
+      "groupName": "node"
+    },
+    {
+      "description": "package.json の devEngines.runtime の node も node グループに入れる。engines.node (互換範囲の宣言) は対象外にするため depType で絞る",
+      "matchManagers": [
+        "npm"
+      ],
+      "matchDepTypes": [
+        "devEngines.runtime"
       ],
       "matchDepNames": [
         "node"
